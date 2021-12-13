@@ -23,7 +23,7 @@ tokens = [
 
 #Función para números decimales
 def t_FLOAT(t):
-    r'\d+\.\d+' #permite la entrada de numeros (d+) seguido de un punto y otra entrada
+    r'\d+\.\d+' #permite la entrada de numeros (d+) seguido de un punto y numeros que representan decimales
     try:
         t.value = float(t.value)    #Permite medir el error según la diferencia en la variación del dato con respecto a su longitud
     except ValueError:
@@ -33,7 +33,7 @@ def t_FLOAT(t):
 
 #Función para números enteros
 def t_INT(t):
-    r'\d+' #Permite la entrada sólo de números enteros sin número
+    r'\d+' #Permite la entrada sólo de números enteros sin decimales
     try: 
         t.value = int(t.value)
     except ValueError:
@@ -80,19 +80,18 @@ precedence = (
     ('left', 'PLUS', 'DIVIDE'),
     ('left', 'LEFTPAR', 'RIGHTPAR'),
     ('right', 'UMINUS')
-    
 )
 
-#para el calculo puede haber una expresion o puede estar vacio
-def p_calc(p):
+#Para el calculo puede haber una expresion o puede estar vacio
+def p_calculo(p):
     '''
     calc: expression 
         | empty
     '''
     print (p[1])
 
-#se definen las operaciones 
-def p_expressions(p):
+#Se definen las operaciones 
+def p_expression(p):
     '''
     expression: expression MULTIPLY expression
               | expression DIVIDE expression 
@@ -109,18 +108,30 @@ def p_expressions_int_float(p):
     '''
     p[0]=p[1]
 
+#Se definen las expresiones con los paréntesis
+def p_expressions_parenthesis(p):
+    'expression : LEFTPAR expression RIGTHPAR'
+    p[0] = p[2]
+
 #se define p[0] como vacio para guardar un resultado
 def p_empty(p):
     '''
     empty : 
     '''
     p[0] = None 
-
-##def p_error(p):
+W
+#Si se llega a encontrar un error en las expresiones
+def p_error(p):
+    print("ERROR: Fallo en la entrada, operación no permitida")
 
 parser = yacc.yacc()
 
-while True:
+entrada = open("./valores.txt", "r")
+input = entrada.read()
+print(input)
+parser.pase(input)
+
+while entrada==True:
     try:
         s = input('')
     except (EOFError):
