@@ -3,7 +3,7 @@ import ply.yacc as yacc
 import sys 
 
 #lexer 
-#Se definen los nombres al lexer 
+#Se definen los nombres de los tokens al lexer 
 tokens = [
     'INT',
     'FLOAT',
@@ -15,7 +15,27 @@ tokens = [
     'EQUALS'
 ]
 
-#se le agregan las valoraciones para las operaciones 
+#Se crean las funciones que permiten agregarle los valores a los tokens anteriores
+
+#Función para números decimales
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    try:
+        t.value = float(t.value)    #Permite medir el error según la diferencia en la variación del dato con respecto a su longitud
+    except ValueError:
+        print("El numero en decimales introducido es demasiado largo")
+        t.value = 0
+    return t
+
+#Función para números enteros
+def t_INT(t):
+    r'\d+'
+    try: 
+        t.value = int(t.value)
+    except ValueError:
+        print("El valor entero introducido es demasiado largo")
+        t.value = 0
+        
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_DIVIDE = r'\/'
