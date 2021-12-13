@@ -2,7 +2,8 @@ import ply.lex as lex
 import ply.yacc as yacc 
 import sys 
 
-#lexer 
+##lexer
+
 #Se definen los nombres de los tokens al lexer 
 tokens = [
     'INT',
@@ -12,14 +13,17 @@ tokens = [
     'MINUS',
     'DIVIDE',
     'MULTIPLY',
-    'EQUALS'
+    'EQUALS',
+    'LEFTPAR',
+    'RIGHTPAR',
+    'FIN'
 ]
 
-#Se crean las funciones que permiten agregarle los valores a los tokens anteriores
+#Se crean las funciones que permiten agregarle los valores a los tokens anteriores, tranformando los strings de entradas a cadenas.
 
 #Función para números decimales
 def t_FLOAT(t):
-    r'\d+\.\d+'
+    r'\d+\.\d+' #permite la entrada de numeros (d+) seguido de un punto y otra entrada
     try:
         t.value = float(t.value)    #Permite medir el error según la diferencia en la variación del dato con respecto a su longitud
     except ValueError:
@@ -29,33 +33,13 @@ def t_FLOAT(t):
 
 #Función para números enteros
 def t_INT(t):
-    r'\d+'
+    r'\d+' #Permite la entrada sólo de números enteros sin número
     try: 
         t.value = int(t.value)
     except ValueError:
         print("El valor entero introducido es demasiado largo")
         t.value = 0
         
-t_PLUS = r'\+'
-t_MINUS = r'\-'
-t_DIVIDE = r'\/'
-t_MULTIPLY = r'\*'
-t_EQUALS = r'\='
-
-#usaremos esto para ignorar espacios entre los valores de la expresión
-t_ignore = r' '
-
-#funcion para transformar los valores de string a int 
-def t_INT(t):
-    r'\d'
-    t.value = int(t.value)
-    return t 
-
-#funcion para transformar los valores de string a float 
-def t_FLOAT(t):
-    r'\d.\d'
-    t.value = float(t.value)
-    return t 
 
 #funcion para asignar nombres a las variables 
 def t_NAME(t):
@@ -63,17 +47,41 @@ def t_NAME(t):
     t.type = 'NAME'
     return t 
 
+#Le asignamos reglas a nuestros tokens identificados en el primer paso
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_DIVIDE = r'\/'
+t_MULTIPLY = r'\*'
+t_EQUALS = r'\='
+t_FIN = r'\;'
+t_LEFTPAR = r'\('
+t_RIGHTPAR = r'\)'
 
-#funcion para señalar errores en la entrada
+#usaremos esto para ignorar espacios entre los valores de la expresión
+t_ignore = r'\t'
+
+#funcion para señalar errores en la entrada por caracteres que no correspondan al lenguaje
 def t_error(t):
-    print("Syntax error!")
+    print("¡Syntax error!, el valor introducido no es permitido")
+    print("Valor prohibido: '%s'" % t.value[0])
     t.lexer.skip(1)
 
+##Lexer como analizador léxico
 lexer = lex.lex()
 
+##Parser
 
-##parser
 ##se define la gramatica del parser
+
+#Puede haber ambiguedad en las operaciones, por lo que se debe establecer la jerarquía de operaciones
+#Mientras más abajo está, mayor jerarquía tiene
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'PLUS', 'DIVIDE'),
+    ('left', 'LEFTPAR', 'RIGHTPAR'),
+    ('right', 'UMINUS')
+    
+)
 
 #para el calculo puede haber una expresion o puede estar vacio
 def p_calc(p):
