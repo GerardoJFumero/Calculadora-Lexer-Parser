@@ -1,1 +1,44 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    EQUALS
+    FIN
+    NAME
+    RIGHTPAR
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression
+Rule 2     expression -> empty
+Rule 3     expression -> expression MULTIPLY expression
+Rule 4     expression -> expression DIVIDE expression
+Rule 5     expression -> expression PLUS expression
+Rule 6     expression -> expression MINUS expression
+Rule 7     expression -> INT
+Rule 8     expression -> FLOAT
+Rule 9     expression -> LEFTPAR expression RIGTHPAR
+Rule 10    empty -> <empty>
+
+Terminals, with rules where they appear
+
+DIVIDE               : 4
+EQUALS               : 
+FIN                  : 
+FLOAT                : 8
+INT                  : 7
+LEFTPAR              : 9
+MINUS                : 6
+MULTIPLY             : 3
+NAME                 : 
+PLUS                 : 5
+RIGHTPAR             : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+RIGTHPAR             : 9
+empty                : 2
+expression           : 1 3 3 4 4 5 5 6 6 9 0
+

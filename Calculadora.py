@@ -5,7 +5,7 @@ import sys
 ##lexer
 
 #Se definen los nombres de los tokens al lexer 
-tokens = [
+tokens = (
     'INT',
     'FLOAT',
     'NAME',
@@ -16,8 +16,9 @@ tokens = [
     'EQUALS',
     'LEFTPAR',
     'RIGHTPAR',
+    'CALCULATE',
     'FIN'
-]
+)
 
 #Se crean las funciones que permiten agregarle los valores a los tokens anteriores, tranformando los strings de entradas a cadenas.
 
@@ -48,17 +49,18 @@ def t_NAME(t):
     return t 
 
 #Le asignamos reglas a nuestros tokens identificados en el primer paso
-t_PLUS = r'\+'
-t_MINUS = r'\-'
-t_DIVIDE = r'\/'
-t_MULTIPLY = r'\*'
-t_EQUALS = r'\='
-t_FIN = r'\;'
-t_LEFTPAR = r'\('
-t_RIGHTPAR = r'\)'
+PLUS = r'\+'
+MINUS = r'\-'
+DIVIDE = r'\/'
+MULTIPLY = r'\*'
+EQUALS = r'\='
+FIN = r'\;'
+LEFTPAR = r'\('
+RIGHTPAR = r'\)'
+CALCULATE = r'\Calcular'
 
 #usaremos esto para ignorar espacios entre los valores de la expresión
-t_ignore = r'\t'
+t_ignore = r''
 
 #funcion para señalar errores en la entrada por caracteres que no correspondan al lenguaje
 def t_error(t):
@@ -82,29 +84,30 @@ precedence = (
     ('right', 'UMINUS')
 )
 
+
 #Para el calculo puede haber una expresion o puede estar vacio
 def p_calculo(p):
     '''
-    calc: expression 
-        | empty
+    expression  : expression 
+                | empty
     '''
     print (p[1])
 
 #Se definen las operaciones 
 def p_expression(p):
     '''
-    expression: expression MULTIPLY expression
-              | expression DIVIDE expression 
-              | expression PLUS expression
-              | expression MINUS expression 
+    expression  : expression MULTIPLY expression
+                | expression DIVIDE expression 
+                | expression PLUS expression
+                | expression MINUS expression 
     '''
     p[0]= (p[2],p[1],p[3])
 
 #una expresión puede ser de tipo integer o float
 def p_expressions_int_float(p):
     '''
-    expression: INT
-              | FLOAT 
+    expression  : INT
+                | FLOAT 
     '''
     p[0]=p[1]
 
@@ -119,7 +122,7 @@ def p_empty(p):
     empty : 
     '''
     p[0] = None 
-W
+
 #Si se llega a encontrar un error en las expresiones
 def p_error(p):
     print("ERROR: Fallo en la entrada, operación no permitida")
