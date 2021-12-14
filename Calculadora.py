@@ -116,6 +116,7 @@ def p_expression_solution(t):
     elif t[1] == '!':  t[0] =  factorial(t[2])
 
 
+#Función para calcular el factorial que recibe como parámetro t[2]
 def factorial(n):
     factorial_total = 1
     while n > 1:
