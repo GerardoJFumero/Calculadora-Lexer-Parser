@@ -1,5 +1,7 @@
+from os import error
 import ply.lex as lex 
 import ply.yacc as yacc
+import math
 
 import sys 
 
@@ -19,6 +21,9 @@ tokens = (
     'RIGHTBRA',
     'LEFTBRA',
     'FACTORIAL',
+    'SQRT',
+    'SEN',
+    'COS',
     'FIN'
 )
 
@@ -58,6 +63,10 @@ t_CALCULATE = r'Calcular'
 t_RIGHTBRA = r'\]'
 t_LEFTBRA = r'\['
 t_FACTORIAL = r'\!'
+t_SQRT = r'sqrt'
+t_SEN = r'sen'
+t_COS = r'cos'
+
 
 #usaremos esto para ignorar espacios entre los valores de la expresión
 t_ignore = " \t"
@@ -83,7 +92,8 @@ lexer = lex.lex()
 #Mientras más abajo está, mayor jerarquía tiene
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'FACTORIAL','PLUS', 'DIVIDE'),
+    ('left','FACTORIAL','PLUS', 'DIVIDE'),
+    ('left', 'SQRT', 'SEN', 'COS'),
     ('right', 'UMINUS')
 )
 
@@ -108,13 +118,30 @@ def p_expression_solution(t):
                 | expression PLUS expression
                 | expression MINUS expression 
                 | FACTORIAL expression
+                | SQRT LEFTPAR expression RIGHTPAR
+                | SEN LEFTPAR expression RIGHTPAR
+                | COS LEFTPAR expression RIGHTPAR
     '''
     if t[2] == '+': t[0] = t[1] + t[3]
     elif t[2] == '-': t[0] = t[1] - t[3]
     elif t[2] == '*': t[0] = t[1] * t[3]
     elif t[2] == '/': t[0] = t[1] / t[3]
     elif t[1] == '!':  t[0] =  factorial(t[2])
+    elif t[1] == 'sqrt': t[0] = raiz(t[3])
+    elif t[1] == 'sen': t[0] = senos(t[3])
+    elif t[1] == 'cos': t[0] = cosenos(t[3])
+    
+    
+#Función para transformar a angulos
+def senos(a):
+    angulo = math.radians(a)
+    resultado = math.sin(angulo)
+    return resultado
 
+def cosenos(b):
+    angulo = math.radians(b)
+    resultado = math.cos(angulo)
+    return round(resultado)
 
 #Función para calcular el factorial que recibe como parámetro t[2]
 def factorial(n):
@@ -123,6 +150,20 @@ def factorial(n):
         factorial_total *= n
         n -= 1
     return factorial_total
+
+
+#Función para calcular la raiz cuadrada de un numero que recibe como parámetro t[3]
+def raiz(numero):
+    numero = numero*1.0
+    if numero >= 0:
+        p=numero
+        i=0
+        while i!=p:
+            i=p
+            p=(numero/p+p)/2
+    else : 
+        p = error
+    return p
 
     
 #Las expresiones puede ser de tipo integer o float

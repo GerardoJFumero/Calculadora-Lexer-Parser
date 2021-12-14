@@ -1,3 +1,7 @@
 Calcular[3+3];
 Calcular[2-2];
 Calcular[!10];
+Calcular[sqrt(144)];
+Calcular[sen(90)];
+Calcular[cos(90)];
+Calcular[3*2*(sen(45))+31/45+!5];
