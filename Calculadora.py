@@ -107,6 +107,7 @@ def p_calculat(t):
                 | empty
     '''
 
+#Para la lectura de entrada, especificamente el orden de las operaciones 
 def p_solutio(t):
     'expression : CALCULATE LEFTBRA expression RIGHTBRA FIN'
     print('Resultado: ' + str(t[3]))
