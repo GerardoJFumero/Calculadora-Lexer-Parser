@@ -113,8 +113,16 @@ def p_expression_solution(t):
     elif t[2] == '-': t[0] = t[1] - t[3]
     elif t[2] == '*': t[0] = t[1] * t[3]
     elif t[2] == '/': t[0] = t[1] / t[3]
-    elif t[1] == '!':  t[0] =  factorial(t[2])
+    elif t[1] == '!':  t[0] =  ##factorial(t[2])
 
+
+def factorial(f):
+    for f in range (1,f+1):
+      fact=fact*f
+    
+    return fact   
+
+    
 #Las expresiones puede ser de tipo integer o float
 def p_expressions_int_floa(t):
     '''
