@@ -1,1 +1,2 @@
-3+3
+Calcular[3+3];
+Calcular[2-2];

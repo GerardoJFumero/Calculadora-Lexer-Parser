@@ -1,44 +1,682 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    EQUALS
-    FIN
-    NAME
-    RIGHTPAR
-
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression
-Rule 2     expression -> empty
-Rule 3     expression -> expression MULTIPLY expression
-Rule 4     expression -> expression DIVIDE expression
-Rule 5     expression -> expression PLUS expression
-Rule 6     expression -> expression MINUS expression
-Rule 7     expression -> INT
-Rule 8     expression -> FLOAT
-Rule 9     expression -> LEFTPAR expression RIGTHPAR
-Rule 10    empty -> <empty>
+Rule 0     S' -> expressions
+Rule 1     expressions -> expression expressions
+Rule 2     expressions -> expression
+Rule 3     expressions -> empty
+Rule 4     expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN
+Rule 5     expression -> expression MULTIPLY expression
+Rule 6     expression -> expression DIVIDE expression
+Rule 7     expression -> expression PLUS expression
+Rule 8     expression -> expression MINUS expression
+Rule 9     expression -> FACTORIAL expression
+Rule 10    expression -> INT
+Rule 11    expression -> FLOAT
+Rule 12    expression -> MINUS expression
+Rule 13    expression -> LEFTPAR expression RIGHTPAR
+Rule 14    empty -> <empty>
 
 Terminals, with rules where they appear
 
-DIVIDE               : 4
-EQUALS               : 
-FIN                  : 
-FLOAT                : 8
-INT                  : 7
-LEFTPAR              : 9
-MINUS                : 6
-MULTIPLY             : 3
-NAME                 : 
-PLUS                 : 5
-RIGHTPAR             : 
+CALCULATE            : 4
+DIVIDE               : 6
+FACTORIAL            : 9
+FIN                  : 4
+FLOAT                : 11
+INT                  : 10
+LEFTBRA              : 4
+LEFTPAR              : 13
+MINUS                : 8 12
+MULTIPLY             : 5
+PLUS                 : 7
+RIGHTBRA             : 4
+RIGHTPAR             : 13
 error                : 
 
 Nonterminals, with rules where they appear
 
-RIGTHPAR             : 9
-empty                : 2
-expression           : 1 3 3 4 4 5 5 6 6 9 0
+empty                : 3
+expression           : 1 2 4 5 5 6 6 7 7 8 8 9 12 13
+expressions          : 1 0
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expressions
+    (1) expressions -> . expression expressions
+    (2) expressions -> . expression
+    (3) expressions -> . empty
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+    (14) empty -> .
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+    $end            reduce using rule 14 (empty -> .)
+
+    expressions                    shift and go to state 1
+    expression                     shift and go to state 2
+    empty                          shift and go to state 3
+
+state 1
+
+    (0) S' -> expressions .
+
+
+
+state 2
+
+    (1) expressions -> expression . expressions
+    (2) expressions -> expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (1) expressions -> . expression expressions
+    (2) expressions -> . expression
+    (3) expressions -> . empty
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+    (14) empty -> .
+
+  ! reduce/reduce conflict for $end resolved using rule 2 (expressions -> expression .)
+    $end            reduce using rule 2 (expressions -> expression .)
+    MULTIPLY        shift and go to state 11
+    DIVIDE          shift and go to state 12
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    LEFTPAR         shift and go to state 9
+
+  ! $end            [ reduce using rule 14 (empty -> .) ]
+
+    expression                     shift and go to state 2
+    expressions                    shift and go to state 10
+    empty                          shift and go to state 3
+
+state 3
+
+    (3) expressions -> empty .
+
+    $end            reduce using rule 3 (expressions -> empty .)
+
+
+state 4
+
+    (4) expression -> CALCULATE . RIGHTBRA expression LEFTBRA FIN
+
+    RIGHTBRA        shift and go to state 15
+
+
+state 5
+
+    (12) expression -> MINUS . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 16
+
+state 6
+
+    (9) expression -> FACTORIAL . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 17
+
+state 7
+
+    (10) expression -> INT .
+
+    MULTIPLY        reduce using rule 10 (expression -> INT .)
+    DIVIDE          reduce using rule 10 (expression -> INT .)
+    PLUS            reduce using rule 10 (expression -> INT .)
+    MINUS           reduce using rule 10 (expression -> INT .)
+    CALCULATE       reduce using rule 10 (expression -> INT .)
+    FACTORIAL       reduce using rule 10 (expression -> INT .)
+    INT             reduce using rule 10 (expression -> INT .)
+    FLOAT           reduce using rule 10 (expression -> INT .)
+    LEFTPAR         reduce using rule 10 (expression -> INT .)
+    $end            reduce using rule 10 (expression -> INT .)
+    RIGHTPAR        reduce using rule 10 (expression -> INT .)
+    LEFTBRA         reduce using rule 10 (expression -> INT .)
+
+
+state 8
+
+    (11) expression -> FLOAT .
+
+    MULTIPLY        reduce using rule 11 (expression -> FLOAT .)
+    DIVIDE          reduce using rule 11 (expression -> FLOAT .)
+    PLUS            reduce using rule 11 (expression -> FLOAT .)
+    MINUS           reduce using rule 11 (expression -> FLOAT .)
+    CALCULATE       reduce using rule 11 (expression -> FLOAT .)
+    FACTORIAL       reduce using rule 11 (expression -> FLOAT .)
+    INT             reduce using rule 11 (expression -> FLOAT .)
+    FLOAT           reduce using rule 11 (expression -> FLOAT .)
+    LEFTPAR         reduce using rule 11 (expression -> FLOAT .)
+    $end            reduce using rule 11 (expression -> FLOAT .)
+    RIGHTPAR        reduce using rule 11 (expression -> FLOAT .)
+    LEFTBRA         reduce using rule 11 (expression -> FLOAT .)
+
+
+state 9
+
+    (13) expression -> LEFTPAR . expression RIGHTPAR
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 18
+
+state 10
+
+    (1) expressions -> expression expressions .
+
+    $end            reduce using rule 1 (expressions -> expression expressions .)
+
+
+state 11
+
+    (5) expression -> expression MULTIPLY . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 19
+
+state 12
+
+    (6) expression -> expression DIVIDE . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 20
+
+state 13
+
+    (7) expression -> expression PLUS . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 21
+
+state 14
+
+    (8) expression -> expression MINUS . expression
+    (12) expression -> MINUS . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 22
+
+state 15
+
+    (4) expression -> CALCULATE RIGHTBRA . expression LEFTBRA FIN
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 23
+
+state 16
+
+    (12) expression -> MINUS expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    MULTIPLY        reduce using rule 12 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 12 (expression -> MINUS expression .)
+    PLUS            reduce using rule 12 (expression -> MINUS expression .)
+    MINUS           reduce using rule 12 (expression -> MINUS expression .)
+    CALCULATE       reduce using rule 12 (expression -> MINUS expression .)
+    FACTORIAL       reduce using rule 12 (expression -> MINUS expression .)
+    INT             reduce using rule 12 (expression -> MINUS expression .)
+    FLOAT           reduce using rule 12 (expression -> MINUS expression .)
+    LEFTPAR         reduce using rule 12 (expression -> MINUS expression .)
+    $end            reduce using rule 12 (expression -> MINUS expression .)
+    RIGHTPAR        reduce using rule 12 (expression -> MINUS expression .)
+    LEFTBRA         reduce using rule 12 (expression -> MINUS expression .)
+
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! DIVIDE          [ shift and go to state 12 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 17
+
+    (9) expression -> FACTORIAL expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    MULTIPLY        reduce using rule 9 (expression -> FACTORIAL expression .)
+    DIVIDE          reduce using rule 9 (expression -> FACTORIAL expression .)
+    PLUS            reduce using rule 9 (expression -> FACTORIAL expression .)
+    MINUS           reduce using rule 9 (expression -> FACTORIAL expression .)
+    CALCULATE       reduce using rule 9 (expression -> FACTORIAL expression .)
+    FACTORIAL       reduce using rule 9 (expression -> FACTORIAL expression .)
+    INT             reduce using rule 9 (expression -> FACTORIAL expression .)
+    FLOAT           reduce using rule 9 (expression -> FACTORIAL expression .)
+    LEFTPAR         reduce using rule 9 (expression -> FACTORIAL expression .)
+    $end            reduce using rule 9 (expression -> FACTORIAL expression .)
+    RIGHTPAR        reduce using rule 9 (expression -> FACTORIAL expression .)
+    LEFTBRA         reduce using rule 9 (expression -> FACTORIAL expression .)
+
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! DIVIDE          [ shift and go to state 12 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 18
+
+    (13) expression -> LEFTPAR expression . RIGHTPAR
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    RIGHTPAR        shift and go to state 25
+    MULTIPLY        shift and go to state 11
+    DIVIDE          shift and go to state 12
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 24
+
+
+state 19
+
+    (5) expression -> expression MULTIPLY expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+  ! shift/reduce conflict for MULTIPLY resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    CALCULATE       reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    FACTORIAL       reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    INT             reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    FLOAT           reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    LEFTPAR         reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    $end            reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    RIGHTPAR        reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    LEFTBRA         reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    MULTIPLY        shift and go to state 11
+    DIVIDE          shift and go to state 12
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 24
+
+  ! MULTIPLY        [ reduce using rule 5 (expression -> expression MULTIPLY expression .) ]
+  ! DIVIDE          [ reduce using rule 5 (expression -> expression MULTIPLY expression .) ]
+  ! PLUS            [ reduce using rule 5 (expression -> expression MULTIPLY expression .) ]
+  ! MINUS           [ reduce using rule 5 (expression -> expression MULTIPLY expression .) ]
+
+
+state 20
+
+    (6) expression -> expression DIVIDE expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    MULTIPLY        reduce using rule 6 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 6 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 6 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 6 (expression -> expression DIVIDE expression .)
+    CALCULATE       reduce using rule 6 (expression -> expression DIVIDE expression .)
+    FACTORIAL       reduce using rule 6 (expression -> expression DIVIDE expression .)
+    INT             reduce using rule 6 (expression -> expression DIVIDE expression .)
+    FLOAT           reduce using rule 6 (expression -> expression DIVIDE expression .)
+    LEFTPAR         reduce using rule 6 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 6 (expression -> expression DIVIDE expression .)
+    RIGHTPAR        reduce using rule 6 (expression -> expression DIVIDE expression .)
+    LEFTBRA         reduce using rule 6 (expression -> expression DIVIDE expression .)
+
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! DIVIDE          [ shift and go to state 12 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 21
+
+    (7) expression -> expression PLUS expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    MULTIPLY        reduce using rule 7 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 7 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 7 (expression -> expression PLUS expression .)
+    CALCULATE       reduce using rule 7 (expression -> expression PLUS expression .)
+    FACTORIAL       reduce using rule 7 (expression -> expression PLUS expression .)
+    INT             reduce using rule 7 (expression -> expression PLUS expression .)
+    FLOAT           reduce using rule 7 (expression -> expression PLUS expression .)
+    LEFTPAR         reduce using rule 7 (expression -> expression PLUS expression .)
+    $end            reduce using rule 7 (expression -> expression PLUS expression .)
+    RIGHTPAR        reduce using rule 7 (expression -> expression PLUS expression .)
+    LEFTBRA         reduce using rule 7 (expression -> expression PLUS expression .)
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 22
+
+    (8) expression -> expression MINUS expression .
+    (12) expression -> MINUS expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+  ! reduce/reduce conflict for MULTIPLY resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for PLUS resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for MINUS resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for CALCULATE resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for FACTORIAL resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for INT resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for LEFTPAR resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for $end resolved using rule 8 (expression -> expression MINUS expression .)
+    MULTIPLY        reduce using rule 8 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
+    CALCULATE       reduce using rule 8 (expression -> expression MINUS expression .)
+    FACTORIAL       reduce using rule 8 (expression -> expression MINUS expression .)
+    INT             reduce using rule 8 (expression -> expression MINUS expression .)
+    FLOAT           reduce using rule 8 (expression -> expression MINUS expression .)
+    LEFTPAR         reduce using rule 8 (expression -> expression MINUS expression .)
+    $end            reduce using rule 8 (expression -> expression MINUS expression .)
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! MULTIPLY        [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! PLUS            [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! CALCULATE       [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! FACTORIAL       [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! INT             [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! FLOAT           [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! LEFTPAR         [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! $end            [ reduce using rule 12 (expression -> MINUS expression .) ]
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 23
+
+    (4) expression -> CALCULATE RIGHTBRA expression . LEFTBRA FIN
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    LEFTBRA         shift and go to state 26
+    MULTIPLY        shift and go to state 11
+    DIVIDE          shift and go to state 12
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 24
+
+
+state 24
+
+    (8) expression -> expression MINUS . expression
+    (4) expression -> . CALCULATE RIGHTBRA expression LEFTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . INT
+    (11) expression -> . FLOAT
+    (12) expression -> . MINUS expression
+    (13) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 9
+
+    expression                     shift and go to state 27
+
+state 25
+
+    (13) expression -> LEFTPAR expression RIGHTPAR .
+
+    MULTIPLY        reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    DIVIDE          reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    PLUS            reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    MINUS           reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    CALCULATE       reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    FACTORIAL       reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    INT             reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    FLOAT           reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    LEFTPAR         reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    $end            reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    RIGHTPAR        reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+    LEFTBRA         reduce using rule 13 (expression -> LEFTPAR expression RIGHTPAR .)
+
+
+state 26
+
+    (4) expression -> CALCULATE RIGHTBRA expression LEFTBRA . FIN
+
+    FIN             shift and go to state 28
+
+
+state 27
+
+    (8) expression -> expression MINUS expression .
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    MULTIPLY        reduce using rule 8 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
+    CALCULATE       reduce using rule 8 (expression -> expression MINUS expression .)
+    FACTORIAL       reduce using rule 8 (expression -> expression MINUS expression .)
+    INT             reduce using rule 8 (expression -> expression MINUS expression .)
+    FLOAT           reduce using rule 8 (expression -> expression MINUS expression .)
+    LEFTPAR         reduce using rule 8 (expression -> expression MINUS expression .)
+    $end            reduce using rule 8 (expression -> expression MINUS expression .)
+    RIGHTPAR        reduce using rule 8 (expression -> expression MINUS expression .)
+    LEFTBRA         reduce using rule 8 (expression -> expression MINUS expression .)
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! MULTIPLY        [ shift and go to state 11 ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 24 ]
+
+
+state 28
+
+    (4) expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .
+
+    MULTIPLY        reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    DIVIDE          reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    PLUS            reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    MINUS           reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    CALCULATE       reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    FACTORIAL       reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    INT             reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    FLOAT           reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    LEFTPAR         reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    $end            reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    RIGHTPAR        reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+    LEFTBRA         reduce using rule 4 (expression -> CALCULATE RIGHTBRA expression LEFTBRA FIN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MULTIPLY in state 19 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 19 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 19 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 19 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (expressions -> expression)
+WARNING: rejected rule (empty -> <empty>) in state 2
+WARNING: reduce/reduce conflict in state 22 resolved using rule (expression -> expression MINUS expression)
+WARNING: rejected rule (expression -> MINUS expression) in state 22

@@ -1,5 +1,6 @@
 import ply.lex as lex 
-import ply.yacc as yacc 
+import ply.yacc as yacc
+from math import factorial 
 import sys 
 
 ##lexer
@@ -8,64 +9,58 @@ import sys
 tokens = (
     'INT',
     'FLOAT',
-    'NAME',
     'PLUS',
     'MINUS',
     'DIVIDE',
     'MULTIPLY',
-    'EQUALS',
     'LEFTPAR',
     'RIGHTPAR',
     'CALCULATE',
     'RIGHTBRA',
     'LEFTBRA',
+    'FACTORIAL',
     'FIN'
 )
 
 #Se crean las funciones que permiten agregarle los valores a los tokens anteriores, tranformando los strings de entradas a cadenas.
 
 #Función para números decimales
-def t_FLOAT(t):
+def t_FLOAT(p):
     r'\d+\.\d+' #permite la entrada de numeros (d+) seguido de un punto y numeros que representan decimales
     try:
-        t.value = float(t.value)    #Permite medir el error según la diferencia en la variación del dato con respecto a su longitud
+        p.value = float(p.value)    #Permite medir el error según la diferencia en la variación del dato con respecto a su longitud
     except ValueError:
         print("El numero en decimales introducido es demasiado largo")
-        t.value = 0
-    return t
+        p.value = 0
+    return p
 
 #Función para números enteros
-def t_INT(t):
+def t_INT(p):
     r'\d+' #Permite la entrada sólo de números enteros sin decimales
     try: 
-        t.value = int(t.value)
+        p.value = int(p.value)
     except ValueError:
         print("El valor entero introducido es demasiado largo")
-        t.value = 0
-    return t
+        p.value = 0
+    return p
 
-#funcion para asignar nombres a las variables 
-def t_NAME(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]'
-    t.type = 'NAME'
-    return t 
+
 
 #Le asignamos reglas a nuestros tokens identificados en el primer paso
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_DIVIDE = r'\/'
 t_MULTIPLY = r'\*'
-t_EQUALS = r'\='
 t_FIN = r'\;'
 t_LEFTPAR = r'\('
 t_RIGHTPAR = r'\)'
-t_CALCULATE = r'\Calcular'
+t_CALCULATE = r'Calcular'
 t_RIGHTBRA = r'\]'
-t_RIGHTBRA = r'\['
-
+t_LEFTBRA = r'\['
+t_FACTORIAL = r'\!'
 
 #usaremos esto para ignorar espacios entre los valores de la expresión
-t_ignore = r' \t'
+t_ignore = " \p"
 
 #funcion para señalar errores en la entrada por caracteres que no correspondan al lenguaje
 def t_error(p):
@@ -88,7 +83,7 @@ lexer = lex.lex()
 #Mientras más abajo está, mayor jerarquía tiene
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'PLUS', 'DIVIDE'),
+    ('left', 'FACTORIAL','PLUS', 'DIVIDE'),
     ('right', 'UMINUS')
 )
 
@@ -101,32 +96,41 @@ def p_calculate(p):
                 | empty
     '''
 
-
 def p_solution(p):
-    'expression : EVUALUATE CORIZQ expresion CORDER PTCOMA'
+    'expression : CALCULATE RIGHTBRA expression LEFTBRA FIN'
     print('Resultado: ' + str(p[3]))
 
 #Se definen las operaciones 
-def p_expression(p):
+def p_expression_solutions(p):
     '''
     expression  : expression MULTIPLY expression
                 | expression DIVIDE expression 
                 | expression PLUS expression
                 | expression MINUS expression 
+                | FACTORIAL expression
     '''
-    p[0]= (p[2],p[1],p[3])
+    if p[2] == '+': p[0] = p[1] + p[3]
+    elif p[2] == '-': p[0] = p[1] - p[3]
+    elif p[2] == '*': p[0] = p[1] * p[3]
+    elif p[2] == '/': p[0] = p[1] / p[3]
+    elif p[1] == '!':  p[0] =  factorial(p[2])
 
-#una expresión puede ser de tipo integer o float
+#Las expresiones puede ser de tipo integer o float
 def p_expressions_int_float(p):
     '''
     expression  : INT
                 | FLOAT 
     '''
     p[0]=p[1]
+    
+#Expresiones para números negativos
+def p_negative(p):
+    'expression : MINUS expression %prec UMINUS'
+    p[0] = -p[2]
 
 #Se definen las expresiones con los paréntesis
 def p_expressions_parenthesis(p):
-    'expression : LEFTPAR expression RIGTHPAR'
+    'expression : LEFTPAR expression RIGHTPAR'
     p[0] = p[2]
 
 #se define p[0] como vacio para guardar un resultado
@@ -142,14 +146,8 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-entrada = open("./valores.txt", "r")
-input = entrada.read()
+p = open("./valores.txt", "r")
+input = p.read()
 print(input)
-parser.pase(input)
+parser.parse(input)
 
-while entrada==True:
-    try:
-        s = input('')
-    except (EOFError):
-        break
-    parser.parse(s)
