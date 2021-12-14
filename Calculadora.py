@@ -17,6 +17,8 @@ tokens = (
     'LEFTPAR',
     'RIGHTPAR',
     'CALCULATE',
+    'RIGHTBRA',
+    'LEFTBRA',
     'FIN'
 )
 
@@ -40,7 +42,7 @@ def t_INT(t):
     except ValueError:
         print("El valor entero introducido es demasiado largo")
         t.value = 0
-        
+    return t
 
 #funcion para asignar nombres a las variables 
 def t_NAME(t):
@@ -49,24 +51,31 @@ def t_NAME(t):
     return t 
 
 #Le asignamos reglas a nuestros tokens identificados en el primer paso
-PLUS = r'\+'
-MINUS = r'\-'
-DIVIDE = r'\/'
-MULTIPLY = r'\*'
-EQUALS = r'\='
-FIN = r'\;'
-LEFTPAR = r'\('
-RIGHTPAR = r'\)'
-CALCULATE = r'\Calcular'
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_DIVIDE = r'\/'
+t_MULTIPLY = r'\*'
+t_EQUALS = r'\='
+t_FIN = r'\;'
+t_LEFTPAR = r'\('
+t_RIGHTPAR = r'\)'
+t_CALCULATE = r'\Calcular'
+t_RIGHTBRA = r'\]'
+t_RIGHTBRA = r'\['
+
 
 #usaremos esto para ignorar espacios entre los valores de la expresión
-t_ignore = r''
+t_ignore = r' \t'
 
 #funcion para señalar errores en la entrada por caracteres que no correspondan al lenguaje
-def t_error(t):
+def t_error(p):
     print("¡Syntax error!, el valor introducido no es permitido")
-    print("Valor prohibido: '%s'" % t.value[0])
-    t.lexer.skip(1)
+    print("Valor prohibido: '%s'" % p.value[0])
+    p.lexer.skip(1)
+    
+def t_newline(p):
+    r'\n+'
+    p.lexer.lineno += p.value.count("\n")
 
 ##Lexer como analizador léxico
 lexer = lex.lex()
@@ -80,18 +89,22 @@ lexer = lex.lex()
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'PLUS', 'DIVIDE'),
-    ('left', 'LEFTPAR', 'RIGHTPAR'),
     ('right', 'UMINUS')
 )
 
 
 #Para el calculo puede haber una expresion o puede estar vacio
-def p_calculo(p):
+def p_calculate(p):
     '''
-    expression  : expression 
+    expressions  : expression expressions
+                | expression 
                 | empty
     '''
-    print (p[1])
+
+
+def p_solution(p):
+    'expression : EVUALUATE CORIZQ expresion CORDER PTCOMA'
+    print('Resultado: ' + str(p[3]))
 
 #Se definen las operaciones 
 def p_expression(p):
