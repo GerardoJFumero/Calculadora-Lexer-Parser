@@ -92,8 +92,9 @@ lexer = lex.lex()
 #Mientras más abajo está, mayor jerarquía tiene
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left','FACTORIAL','PLUS', 'DIVIDE'),
+    ('left','FACTORIAL','MULTIPLY', 'DIVIDE'),
     ('left', 'SQRT', 'SEN', 'COS'),
+    ('left', 'RIGHTPAR', 'LEFTPAR'),
     ('right', 'UMINUS')
 )
 

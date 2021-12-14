@@ -5,3 +5,5 @@ Calcular[sqrt(144)];
 Calcular[sen(90)];
 Calcular[cos(90)];
 Calcular[3*2*(sen(45))+31/45+!5];
+Calcular[3+2*5/7];
+Calcular[3*2+5+(5*3+1)];
