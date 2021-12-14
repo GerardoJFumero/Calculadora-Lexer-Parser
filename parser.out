@@ -15,28 +15,33 @@ Rule 9     expression -> FACTORIAL expression
 Rule 10    expression -> SQRT LEFTPAR expression RIGHTPAR
 Rule 11    expression -> SEN LEFTPAR expression RIGHTPAR
 Rule 12    expression -> COS LEFTPAR expression RIGHTPAR
-Rule 13    expression -> INT
-Rule 14    expression -> FLOAT
-Rule 15    expression -> MINUS expression
-Rule 16    expression -> LEFTPAR expression RIGHTPAR
-Rule 17    empty -> <empty>
+Rule 13    expression -> AREA LEFTPAR expression COMA expression RIGHTPAR
+Rule 14    expression -> RADTODEG LEFTPAR expression RIGHTPAR
+Rule 15    expression -> INT
+Rule 16    expression -> FLOAT
+Rule 17    expression -> MINUS expression
+Rule 18    expression -> LEFTPAR expression RIGHTPAR
+Rule 19    empty -> <empty>
 
 Terminals, with rules where they appear
 
+AREA                 : 13
 CALCULATE            : 4
+COMA                 : 13
 COS                  : 12
 DIVIDE               : 6
 FACTORIAL            : 9
 FIN                  : 4
-FLOAT                : 14
-INT                  : 13
+FLOAT                : 16
+INT                  : 15
 LEFTBRA              : 4
-LEFTPAR              : 10 11 12 16
-MINUS                : 8 15
+LEFTPAR              : 10 11 12 13 14 18
+MINUS                : 8 17
 MULTIPLY             : 5
 PLUS                 : 7
+RADTODEG             : 14
 RIGHTBRA             : 4
-RIGHTPAR             : 10 11 12 16
+RIGHTPAR             : 10 11 12 13 14 18
 SEN                  : 11
 SQRT                 : 10
 error                : 
@@ -44,7 +49,7 @@ error                :
 Nonterminals, with rules where they appear
 
 empty                : 3
-expression           : 1 2 4 5 5 6 6 7 7 8 8 9 10 11 12 15 16
+expression           : 1 2 4 5 5 6 6 7 7 8 8 9 10 11 12 13 13 14 17 18
 expressions          : 1 0
 
 Parsing method: LALR
@@ -64,22 +69,26 @@ state 0
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
-    (17) empty -> .
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
+    (19) empty -> .
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
-    $end            reduce using rule 17 (empty -> .)
+    $end            reduce using rule 19 (empty -> .)
 
     expressions                    shift and go to state 1
     expression                     shift and go to state 2
@@ -111,31 +120,35 @@ state 2
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
-    (17) empty -> .
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
+    (19) empty -> .
 
   ! reduce/reduce conflict for $end resolved using rule 2 (expressions -> expression .)
     $end            reduce using rule 2 (expressions -> expression .)
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 19
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     LEFTPAR         shift and go to state 8
 
-  ! $end            [ reduce using rule 17 (empty -> .) ]
+  ! $end            [ reduce using rule 19 (empty -> .) ]
 
     expression                     shift and go to state 2
-    expressions                    shift and go to state 13
+    expressions                    shift and go to state 15
     empty                          shift and go to state 3
 
 state 3
@@ -149,12 +162,12 @@ state 4
 
     (4) expression -> CALCULATE . LEFTBRA expression RIGHTBRA FIN
 
-    LEFTBRA         shift and go to state 18
+    LEFTBRA         shift and go to state 20
 
 
 state 5
 
-    (15) expression -> MINUS . expression
+    (17) expression -> MINUS . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
     (5) expression -> . expression MULTIPLY expression
     (6) expression -> . expression DIVIDE expression
@@ -164,22 +177,26 @@ state 5
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 19
+    expression                     shift and go to state 21
 
 state 6
 
@@ -193,33 +210,37 @@ state 6
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 20
+    expression                     shift and go to state 22
 
 state 7
 
     (10) expression -> SQRT . LEFTPAR expression RIGHTPAR
 
-    LEFTPAR         shift and go to state 21
+    LEFTPAR         shift and go to state 23
 
 
 state 8
 
-    (16) expression -> LEFTPAR . expression RIGHTPAR
+    (18) expression -> LEFTPAR . expression RIGHTPAR
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
     (5) expression -> . expression MULTIPLY expression
     (6) expression -> . expression DIVIDE expression
@@ -229,87 +250,111 @@ state 8
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 22
+    expression                     shift and go to state 24
 
 state 9
 
     (11) expression -> SEN . LEFTPAR expression RIGHTPAR
 
-    LEFTPAR         shift and go to state 23
+    LEFTPAR         shift and go to state 25
 
 
 state 10
 
     (12) expression -> COS . LEFTPAR expression RIGHTPAR
 
-    LEFTPAR         shift and go to state 24
+    LEFTPAR         shift and go to state 26
 
 
 state 11
 
-    (13) expression -> INT .
+    (13) expression -> AREA . LEFTPAR expression COMA expression RIGHTPAR
 
-    MULTIPLY        reduce using rule 13 (expression -> INT .)
-    DIVIDE          reduce using rule 13 (expression -> INT .)
-    PLUS            reduce using rule 13 (expression -> INT .)
-    MINUS           reduce using rule 13 (expression -> INT .)
-    CALCULATE       reduce using rule 13 (expression -> INT .)
-    FACTORIAL       reduce using rule 13 (expression -> INT .)
-    SQRT            reduce using rule 13 (expression -> INT .)
-    SEN             reduce using rule 13 (expression -> INT .)
-    COS             reduce using rule 13 (expression -> INT .)
-    INT             reduce using rule 13 (expression -> INT .)
-    FLOAT           reduce using rule 13 (expression -> INT .)
-    LEFTPAR         reduce using rule 13 (expression -> INT .)
-    $end            reduce using rule 13 (expression -> INT .)
-    RIGHTPAR        reduce using rule 13 (expression -> INT .)
-    RIGHTBRA        reduce using rule 13 (expression -> INT .)
+    LEFTPAR         shift and go to state 27
 
 
 state 12
 
-    (14) expression -> FLOAT .
+    (14) expression -> RADTODEG . LEFTPAR expression RIGHTPAR
 
-    MULTIPLY        reduce using rule 14 (expression -> FLOAT .)
-    DIVIDE          reduce using rule 14 (expression -> FLOAT .)
-    PLUS            reduce using rule 14 (expression -> FLOAT .)
-    MINUS           reduce using rule 14 (expression -> FLOAT .)
-    CALCULATE       reduce using rule 14 (expression -> FLOAT .)
-    FACTORIAL       reduce using rule 14 (expression -> FLOAT .)
-    SQRT            reduce using rule 14 (expression -> FLOAT .)
-    SEN             reduce using rule 14 (expression -> FLOAT .)
-    COS             reduce using rule 14 (expression -> FLOAT .)
-    INT             reduce using rule 14 (expression -> FLOAT .)
-    FLOAT           reduce using rule 14 (expression -> FLOAT .)
-    LEFTPAR         reduce using rule 14 (expression -> FLOAT .)
-    $end            reduce using rule 14 (expression -> FLOAT .)
-    RIGHTPAR        reduce using rule 14 (expression -> FLOAT .)
-    RIGHTBRA        reduce using rule 14 (expression -> FLOAT .)
+    LEFTPAR         shift and go to state 28
 
 
 state 13
+
+    (15) expression -> INT .
+
+    MULTIPLY        reduce using rule 15 (expression -> INT .)
+    DIVIDE          reduce using rule 15 (expression -> INT .)
+    PLUS            reduce using rule 15 (expression -> INT .)
+    MINUS           reduce using rule 15 (expression -> INT .)
+    CALCULATE       reduce using rule 15 (expression -> INT .)
+    FACTORIAL       reduce using rule 15 (expression -> INT .)
+    SQRT            reduce using rule 15 (expression -> INT .)
+    SEN             reduce using rule 15 (expression -> INT .)
+    COS             reduce using rule 15 (expression -> INT .)
+    AREA            reduce using rule 15 (expression -> INT .)
+    RADTODEG        reduce using rule 15 (expression -> INT .)
+    INT             reduce using rule 15 (expression -> INT .)
+    FLOAT           reduce using rule 15 (expression -> INT .)
+    LEFTPAR         reduce using rule 15 (expression -> INT .)
+    $end            reduce using rule 15 (expression -> INT .)
+    RIGHTPAR        reduce using rule 15 (expression -> INT .)
+    RIGHTBRA        reduce using rule 15 (expression -> INT .)
+    COMA            reduce using rule 15 (expression -> INT .)
+
+
+state 14
+
+    (16) expression -> FLOAT .
+
+    MULTIPLY        reduce using rule 16 (expression -> FLOAT .)
+    DIVIDE          reduce using rule 16 (expression -> FLOAT .)
+    PLUS            reduce using rule 16 (expression -> FLOAT .)
+    MINUS           reduce using rule 16 (expression -> FLOAT .)
+    CALCULATE       reduce using rule 16 (expression -> FLOAT .)
+    FACTORIAL       reduce using rule 16 (expression -> FLOAT .)
+    SQRT            reduce using rule 16 (expression -> FLOAT .)
+    SEN             reduce using rule 16 (expression -> FLOAT .)
+    COS             reduce using rule 16 (expression -> FLOAT .)
+    AREA            reduce using rule 16 (expression -> FLOAT .)
+    RADTODEG        reduce using rule 16 (expression -> FLOAT .)
+    INT             reduce using rule 16 (expression -> FLOAT .)
+    FLOAT           reduce using rule 16 (expression -> FLOAT .)
+    LEFTPAR         reduce using rule 16 (expression -> FLOAT .)
+    $end            reduce using rule 16 (expression -> FLOAT .)
+    RIGHTPAR        reduce using rule 16 (expression -> FLOAT .)
+    RIGHTBRA        reduce using rule 16 (expression -> FLOAT .)
+    COMA            reduce using rule 16 (expression -> FLOAT .)
+
+
+state 15
 
     (1) expressions -> expression expressions .
 
     $end            reduce using rule 1 (expressions -> expression expressions .)
 
 
-state 14
+state 16
 
     (5) expression -> expression MULTIPLY . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -321,24 +366,28 @@ state 14
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 25
+    expression                     shift and go to state 29
 
-state 15
+state 17
 
     (6) expression -> expression DIVIDE . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -350,24 +399,28 @@ state 15
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 26
+    expression                     shift and go to state 30
 
-state 16
+state 18
 
     (7) expression -> expression PLUS . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -379,27 +432,31 @@ state 16
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 27
+    expression                     shift and go to state 31
 
-state 17
+state 19
 
     (8) expression -> expression MINUS . expression
-    (15) expression -> MINUS . expression
+    (17) expression -> MINUS . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
     (5) expression -> . expression MULTIPLY expression
     (6) expression -> . expression DIVIDE expression
@@ -409,24 +466,28 @@ state 17
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 28
+    expression                     shift and go to state 32
 
-state 18
+state 20
 
     (4) expression -> CALCULATE LEFTBRA . expression RIGHTBRA FIN
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -438,54 +499,61 @@ state 18
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 29
+    expression                     shift and go to state 33
 
-state 19
+state 21
 
-    (15) expression -> MINUS expression .
+    (17) expression -> MINUS expression .
     (5) expression -> expression . MULTIPLY expression
     (6) expression -> expression . DIVIDE expression
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    MULTIPLY        reduce using rule 15 (expression -> MINUS expression .)
-    DIVIDE          reduce using rule 15 (expression -> MINUS expression .)
-    PLUS            reduce using rule 15 (expression -> MINUS expression .)
-    MINUS           reduce using rule 15 (expression -> MINUS expression .)
-    CALCULATE       reduce using rule 15 (expression -> MINUS expression .)
-    FACTORIAL       reduce using rule 15 (expression -> MINUS expression .)
-    SQRT            reduce using rule 15 (expression -> MINUS expression .)
-    SEN             reduce using rule 15 (expression -> MINUS expression .)
-    COS             reduce using rule 15 (expression -> MINUS expression .)
-    INT             reduce using rule 15 (expression -> MINUS expression .)
-    FLOAT           reduce using rule 15 (expression -> MINUS expression .)
-    LEFTPAR         reduce using rule 15 (expression -> MINUS expression .)
-    $end            reduce using rule 15 (expression -> MINUS expression .)
-    RIGHTPAR        reduce using rule 15 (expression -> MINUS expression .)
-    RIGHTBRA        reduce using rule 15 (expression -> MINUS expression .)
+    MULTIPLY        reduce using rule 17 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 17 (expression -> MINUS expression .)
+    PLUS            reduce using rule 17 (expression -> MINUS expression .)
+    MINUS           reduce using rule 17 (expression -> MINUS expression .)
+    CALCULATE       reduce using rule 17 (expression -> MINUS expression .)
+    FACTORIAL       reduce using rule 17 (expression -> MINUS expression .)
+    SQRT            reduce using rule 17 (expression -> MINUS expression .)
+    SEN             reduce using rule 17 (expression -> MINUS expression .)
+    COS             reduce using rule 17 (expression -> MINUS expression .)
+    AREA            reduce using rule 17 (expression -> MINUS expression .)
+    RADTODEG        reduce using rule 17 (expression -> MINUS expression .)
+    INT             reduce using rule 17 (expression -> MINUS expression .)
+    FLOAT           reduce using rule 17 (expression -> MINUS expression .)
+    LEFTPAR         reduce using rule 17 (expression -> MINUS expression .)
+    $end            reduce using rule 17 (expression -> MINUS expression .)
+    RIGHTPAR        reduce using rule 17 (expression -> MINUS expression .)
+    RIGHTBRA        reduce using rule 17 (expression -> MINUS expression .)
+    COMA            reduce using rule 17 (expression -> MINUS expression .)
 
-  ! MULTIPLY        [ shift and go to state 14 ]
-  ! DIVIDE          [ shift and go to state 15 ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! MULTIPLY        [ shift and go to state 16 ]
+  ! DIVIDE          [ shift and go to state 17 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 20
+state 22
 
     (9) expression -> FACTORIAL expression .
     (5) expression -> expression . MULTIPLY expression
@@ -502,20 +570,23 @@ state 20
     SQRT            reduce using rule 9 (expression -> FACTORIAL expression .)
     SEN             reduce using rule 9 (expression -> FACTORIAL expression .)
     COS             reduce using rule 9 (expression -> FACTORIAL expression .)
+    AREA            reduce using rule 9 (expression -> FACTORIAL expression .)
+    RADTODEG        reduce using rule 9 (expression -> FACTORIAL expression .)
     INT             reduce using rule 9 (expression -> FACTORIAL expression .)
     FLOAT           reduce using rule 9 (expression -> FACTORIAL expression .)
     LEFTPAR         reduce using rule 9 (expression -> FACTORIAL expression .)
     $end            reduce using rule 9 (expression -> FACTORIAL expression .)
     RIGHTPAR        reduce using rule 9 (expression -> FACTORIAL expression .)
     RIGHTBRA        reduce using rule 9 (expression -> FACTORIAL expression .)
+    COMA            reduce using rule 9 (expression -> FACTORIAL expression .)
 
-  ! MULTIPLY        [ shift and go to state 14 ]
-  ! DIVIDE          [ shift and go to state 15 ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! MULTIPLY        [ shift and go to state 16 ]
+  ! DIVIDE          [ shift and go to state 17 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 21
+state 23
 
     (10) expression -> SQRT LEFTPAR . expression RIGHTPAR
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -527,39 +598,43 @@ state 21
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 31
+    expression                     shift and go to state 35
 
-state 22
+state 24
 
-    (16) expression -> LEFTPAR expression . RIGHTPAR
+    (18) expression -> LEFTPAR expression . RIGHTPAR
     (5) expression -> expression . MULTIPLY expression
     (6) expression -> expression . DIVIDE expression
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    RIGHTPAR        shift and go to state 32
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 30
+    RIGHTPAR        shift and go to state 36
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
 
 
-state 23
+state 25
 
     (11) expression -> SEN LEFTPAR . expression RIGHTPAR
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -571,24 +646,28 @@ state 23
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 33
+    expression                     shift and go to state 37
 
-state 24
+state 26
 
     (12) expression -> COS LEFTPAR . expression RIGHTPAR
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -600,24 +679,94 @@ state 24
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 34
+    expression                     shift and go to state 38
 
-state 25
+state 27
+
+    (13) expression -> AREA LEFTPAR . expression COMA expression RIGHTPAR
+    (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
+    (11) expression -> . SEN LEFTPAR expression RIGHTPAR
+    (12) expression -> . COS LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    SQRT            shift and go to state 7
+    SEN             shift and go to state 9
+    COS             shift and go to state 10
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 8
+
+    expression                     shift and go to state 39
+
+state 28
+
+    (14) expression -> RADTODEG LEFTPAR . expression RIGHTPAR
+    (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
+    (11) expression -> . SEN LEFTPAR expression RIGHTPAR
+    (12) expression -> . COS LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    SQRT            shift and go to state 7
+    SEN             shift and go to state 9
+    COS             shift and go to state 10
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 8
+
+    expression                     shift and go to state 40
+
+state 29
 
     (5) expression -> expression MULTIPLY expression .
     (5) expression -> expression . MULTIPLY expression
@@ -634,20 +783,23 @@ state 25
     SQRT            reduce using rule 5 (expression -> expression MULTIPLY expression .)
     SEN             reduce using rule 5 (expression -> expression MULTIPLY expression .)
     COS             reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    AREA            reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    RADTODEG        reduce using rule 5 (expression -> expression MULTIPLY expression .)
     INT             reduce using rule 5 (expression -> expression MULTIPLY expression .)
     FLOAT           reduce using rule 5 (expression -> expression MULTIPLY expression .)
     LEFTPAR         reduce using rule 5 (expression -> expression MULTIPLY expression .)
     $end            reduce using rule 5 (expression -> expression MULTIPLY expression .)
     RIGHTPAR        reduce using rule 5 (expression -> expression MULTIPLY expression .)
     RIGHTBRA        reduce using rule 5 (expression -> expression MULTIPLY expression .)
+    COMA            reduce using rule 5 (expression -> expression MULTIPLY expression .)
 
-  ! MULTIPLY        [ shift and go to state 14 ]
-  ! DIVIDE          [ shift and go to state 15 ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! MULTIPLY        [ shift and go to state 16 ]
+  ! DIVIDE          [ shift and go to state 17 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 26
+state 30
 
     (6) expression -> expression DIVIDE expression .
     (5) expression -> expression . MULTIPLY expression
@@ -664,20 +816,23 @@ state 26
     SQRT            reduce using rule 6 (expression -> expression DIVIDE expression .)
     SEN             reduce using rule 6 (expression -> expression DIVIDE expression .)
     COS             reduce using rule 6 (expression -> expression DIVIDE expression .)
+    AREA            reduce using rule 6 (expression -> expression DIVIDE expression .)
+    RADTODEG        reduce using rule 6 (expression -> expression DIVIDE expression .)
     INT             reduce using rule 6 (expression -> expression DIVIDE expression .)
     FLOAT           reduce using rule 6 (expression -> expression DIVIDE expression .)
     LEFTPAR         reduce using rule 6 (expression -> expression DIVIDE expression .)
     $end            reduce using rule 6 (expression -> expression DIVIDE expression .)
     RIGHTPAR        reduce using rule 6 (expression -> expression DIVIDE expression .)
     RIGHTBRA        reduce using rule 6 (expression -> expression DIVIDE expression .)
+    COMA            reduce using rule 6 (expression -> expression DIVIDE expression .)
 
-  ! MULTIPLY        [ shift and go to state 14 ]
-  ! DIVIDE          [ shift and go to state 15 ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! MULTIPLY        [ shift and go to state 16 ]
+  ! DIVIDE          [ shift and go to state 17 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 27
+state 31
 
     (7) expression -> expression PLUS expression .
     (5) expression -> expression . MULTIPLY expression
@@ -692,25 +847,28 @@ state 27
     SQRT            reduce using rule 7 (expression -> expression PLUS expression .)
     SEN             reduce using rule 7 (expression -> expression PLUS expression .)
     COS             reduce using rule 7 (expression -> expression PLUS expression .)
+    AREA            reduce using rule 7 (expression -> expression PLUS expression .)
+    RADTODEG        reduce using rule 7 (expression -> expression PLUS expression .)
     INT             reduce using rule 7 (expression -> expression PLUS expression .)
     FLOAT           reduce using rule 7 (expression -> expression PLUS expression .)
     LEFTPAR         reduce using rule 7 (expression -> expression PLUS expression .)
     $end            reduce using rule 7 (expression -> expression PLUS expression .)
     RIGHTPAR        reduce using rule 7 (expression -> expression PLUS expression .)
     RIGHTBRA        reduce using rule 7 (expression -> expression PLUS expression .)
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
+    COMA            reduce using rule 7 (expression -> expression PLUS expression .)
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
 
   ! MULTIPLY        [ reduce using rule 7 (expression -> expression PLUS expression .) ]
   ! DIVIDE          [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 28
+state 32
 
     (8) expression -> expression MINUS expression .
-    (15) expression -> MINUS expression .
+    (17) expression -> MINUS expression .
     (5) expression -> expression . MULTIPLY expression
     (6) expression -> expression . DIVIDE expression
     (7) expression -> expression . PLUS expression
@@ -725,6 +883,8 @@ state 28
   ! reduce/reduce conflict for SQRT resolved using rule 8 (expression -> expression MINUS expression .)
   ! reduce/reduce conflict for SEN resolved using rule 8 (expression -> expression MINUS expression .)
   ! reduce/reduce conflict for COS resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for AREA resolved using rule 8 (expression -> expression MINUS expression .)
+  ! reduce/reduce conflict for RADTODEG resolved using rule 8 (expression -> expression MINUS expression .)
   ! reduce/reduce conflict for INT resolved using rule 8 (expression -> expression MINUS expression .)
   ! reduce/reduce conflict for FLOAT resolved using rule 8 (expression -> expression MINUS expression .)
   ! reduce/reduce conflict for LEFTPAR resolved using rule 8 (expression -> expression MINUS expression .)
@@ -736,33 +896,37 @@ state 28
     SQRT            reduce using rule 8 (expression -> expression MINUS expression .)
     SEN             reduce using rule 8 (expression -> expression MINUS expression .)
     COS             reduce using rule 8 (expression -> expression MINUS expression .)
+    AREA            reduce using rule 8 (expression -> expression MINUS expression .)
+    RADTODEG        reduce using rule 8 (expression -> expression MINUS expression .)
     INT             reduce using rule 8 (expression -> expression MINUS expression .)
     FLOAT           reduce using rule 8 (expression -> expression MINUS expression .)
     LEFTPAR         reduce using rule 8 (expression -> expression MINUS expression .)
     $end            reduce using rule 8 (expression -> expression MINUS expression .)
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
 
   ! MULTIPLY        [ reduce using rule 8 (expression -> expression MINUS expression .) ]
   ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! MULTIPLY        [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! PLUS            [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! MINUS           [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! CALCULATE       [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! FACTORIAL       [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! SQRT            [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! SEN             [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! COS             [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! INT             [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! FLOAT           [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! LEFTPAR         [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! $end            [ reduce using rule 15 (expression -> MINUS expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! MULTIPLY        [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! PLUS            [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! MINUS           [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! CALCULATE       [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! FACTORIAL       [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! SQRT            [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! SEN             [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! COS             [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! AREA            [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! RADTODEG        [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! INT             [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! FLOAT           [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! LEFTPAR         [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! $end            [ reduce using rule 17 (expression -> MINUS expression .) ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 29
+state 33
 
     (4) expression -> CALCULATE LEFTBRA expression . RIGHTBRA FIN
     (5) expression -> expression . MULTIPLY expression
@@ -770,14 +934,14 @@ state 29
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    RIGHTBRA        shift and go to state 35
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 30
+    RIGHTBRA        shift and go to state 41
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
 
 
-state 30
+state 34
 
     (8) expression -> expression MINUS . expression
     (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
@@ -789,24 +953,28 @@ state 30
     (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
     (11) expression -> . SEN LEFTPAR expression RIGHTPAR
     (12) expression -> . COS LEFTPAR expression RIGHTPAR
-    (13) expression -> . INT
-    (14) expression -> . FLOAT
-    (15) expression -> . MINUS expression
-    (16) expression -> . LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
 
     CALCULATE       shift and go to state 4
     FACTORIAL       shift and go to state 6
     SQRT            shift and go to state 7
     SEN             shift and go to state 9
     COS             shift and go to state 10
-    INT             shift and go to state 11
-    FLOAT           shift and go to state 12
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
     MINUS           shift and go to state 5
     LEFTPAR         shift and go to state 8
 
-    expression                     shift and go to state 36
+    expression                     shift and go to state 42
 
-state 31
+state 35
 
     (10) expression -> SQRT LEFTPAR expression . RIGHTPAR
     (5) expression -> expression . MULTIPLY expression
@@ -814,35 +982,38 @@ state 31
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    RIGHTPAR        shift and go to state 37
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 30
+    RIGHTPAR        shift and go to state 43
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
 
 
-state 32
+state 36
 
-    (16) expression -> LEFTPAR expression RIGHTPAR .
+    (18) expression -> LEFTPAR expression RIGHTPAR .
 
-    MULTIPLY        reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    DIVIDE          reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    PLUS            reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    MINUS           reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    CALCULATE       reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    FACTORIAL       reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    SQRT            reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    SEN             reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    COS             reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    INT             reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    FLOAT           reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    LEFTPAR         reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    $end            reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    RIGHTPAR        reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
-    RIGHTBRA        reduce using rule 16 (expression -> LEFTPAR expression RIGHTPAR .)
+    MULTIPLY        reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    DIVIDE          reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    PLUS            reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    MINUS           reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    CALCULATE       reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    FACTORIAL       reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    SQRT            reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    SEN             reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    COS             reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    AREA            reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    RADTODEG        reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    INT             reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    FLOAT           reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    LEFTPAR         reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    $end            reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    RIGHTPAR        reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    RIGHTBRA        reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
+    COMA            reduce using rule 18 (expression -> LEFTPAR expression RIGHTPAR .)
 
 
-state 33
+state 37
 
     (11) expression -> SEN LEFTPAR expression . RIGHTPAR
     (5) expression -> expression . MULTIPLY expression
@@ -850,14 +1021,14 @@ state 33
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    RIGHTPAR        shift and go to state 38
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 30
+    RIGHTPAR        shift and go to state 44
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
 
 
-state 34
+state 38
 
     (12) expression -> COS LEFTPAR expression . RIGHTPAR
     (5) expression -> expression . MULTIPLY expression
@@ -865,21 +1036,51 @@ state 34
     (7) expression -> expression . PLUS expression
     (8) expression -> expression . MINUS expression
 
-    RIGHTPAR        shift and go to state 39
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 30
+    RIGHTPAR        shift and go to state 45
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
 
 
-state 35
+state 39
+
+    (13) expression -> AREA LEFTPAR expression . COMA expression RIGHTPAR
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    COMA            shift and go to state 46
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
+
+
+state 40
+
+    (14) expression -> RADTODEG LEFTPAR expression . RIGHTPAR
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    RIGHTPAR        shift and go to state 47
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
+
+
+state 41
 
     (4) expression -> CALCULATE LEFTBRA expression RIGHTBRA . FIN
 
-    FIN             shift and go to state 40
+    FIN             shift and go to state 48
 
 
-state 36
+state 42
 
     (8) expression -> expression MINUS expression .
     (5) expression -> expression . MULTIPLY expression
@@ -894,22 +1095,25 @@ state 36
     SQRT            reduce using rule 8 (expression -> expression MINUS expression .)
     SEN             reduce using rule 8 (expression -> expression MINUS expression .)
     COS             reduce using rule 8 (expression -> expression MINUS expression .)
+    AREA            reduce using rule 8 (expression -> expression MINUS expression .)
+    RADTODEG        reduce using rule 8 (expression -> expression MINUS expression .)
     INT             reduce using rule 8 (expression -> expression MINUS expression .)
     FLOAT           reduce using rule 8 (expression -> expression MINUS expression .)
     LEFTPAR         reduce using rule 8 (expression -> expression MINUS expression .)
     $end            reduce using rule 8 (expression -> expression MINUS expression .)
     RIGHTPAR        reduce using rule 8 (expression -> expression MINUS expression .)
     RIGHTBRA        reduce using rule 8 (expression -> expression MINUS expression .)
-    MULTIPLY        shift and go to state 14
-    DIVIDE          shift and go to state 15
+    COMA            reduce using rule 8 (expression -> expression MINUS expression .)
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
 
   ! MULTIPLY        [ reduce using rule 8 (expression -> expression MINUS expression .) ]
   ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 30 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 34 ]
 
 
-state 37
+state 43
 
     (10) expression -> SQRT LEFTPAR expression RIGHTPAR .
 
@@ -922,15 +1126,18 @@ state 37
     SQRT            reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     SEN             reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     COS             reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
+    AREA            reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
+    RADTODEG        reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     INT             reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     FLOAT           reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     LEFTPAR         reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     $end            reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     RIGHTPAR        reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
     RIGHTBRA        reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
+    COMA            reduce using rule 10 (expression -> SQRT LEFTPAR expression RIGHTPAR .)
 
 
-state 38
+state 44
 
     (11) expression -> SEN LEFTPAR expression RIGHTPAR .
 
@@ -943,15 +1150,18 @@ state 38
     SQRT            reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     SEN             reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     COS             reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
+    AREA            reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
+    RADTODEG        reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     INT             reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     FLOAT           reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     LEFTPAR         reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     $end            reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     RIGHTPAR        reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
     RIGHTBRA        reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
+    COMA            reduce using rule 11 (expression -> SEN LEFTPAR expression RIGHTPAR .)
 
 
-state 39
+state 45
 
     (12) expression -> COS LEFTPAR expression RIGHTPAR .
 
@@ -964,15 +1174,75 @@ state 39
     SQRT            reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     SEN             reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     COS             reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
+    AREA            reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
+    RADTODEG        reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     INT             reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     FLOAT           reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     LEFTPAR         reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     $end            reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     RIGHTPAR        reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
     RIGHTBRA        reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
+    COMA            reduce using rule 12 (expression -> COS LEFTPAR expression RIGHTPAR .)
 
 
-state 40
+state 46
+
+    (13) expression -> AREA LEFTPAR expression COMA . expression RIGHTPAR
+    (4) expression -> . CALCULATE LEFTBRA expression RIGHTBRA FIN
+    (5) expression -> . expression MULTIPLY expression
+    (6) expression -> . expression DIVIDE expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . FACTORIAL expression
+    (10) expression -> . SQRT LEFTPAR expression RIGHTPAR
+    (11) expression -> . SEN LEFTPAR expression RIGHTPAR
+    (12) expression -> . COS LEFTPAR expression RIGHTPAR
+    (13) expression -> . AREA LEFTPAR expression COMA expression RIGHTPAR
+    (14) expression -> . RADTODEG LEFTPAR expression RIGHTPAR
+    (15) expression -> . INT
+    (16) expression -> . FLOAT
+    (17) expression -> . MINUS expression
+    (18) expression -> . LEFTPAR expression RIGHTPAR
+
+    CALCULATE       shift and go to state 4
+    FACTORIAL       shift and go to state 6
+    SQRT            shift and go to state 7
+    SEN             shift and go to state 9
+    COS             shift and go to state 10
+    AREA            shift and go to state 11
+    RADTODEG        shift and go to state 12
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
+    MINUS           shift and go to state 5
+    LEFTPAR         shift and go to state 8
+
+    expression                     shift and go to state 49
+
+state 47
+
+    (14) expression -> RADTODEG LEFTPAR expression RIGHTPAR .
+
+    MULTIPLY        reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    DIVIDE          reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    PLUS            reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    MINUS           reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    CALCULATE       reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    FACTORIAL       reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    SQRT            reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    SEN             reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    COS             reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    AREA            reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    RADTODEG        reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    INT             reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    FLOAT           reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    LEFTPAR         reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    $end            reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    RIGHTPAR        reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    RIGHTBRA        reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+    COMA            reduce using rule 14 (expression -> RADTODEG LEFTPAR expression RIGHTPAR .)
+
+
+state 48
 
     (4) expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .
 
@@ -985,17 +1255,59 @@ state 40
     SQRT            reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     SEN             reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     COS             reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
+    AREA            reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
+    RADTODEG        reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     INT             reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     FLOAT           reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     LEFTPAR         reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     $end            reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     RIGHTPAR        reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
     RIGHTBRA        reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
+    COMA            reduce using rule 4 (expression -> CALCULATE LEFTBRA expression RIGHTBRA FIN .)
+
+
+state 49
+
+    (13) expression -> AREA LEFTPAR expression COMA expression . RIGHTPAR
+    (5) expression -> expression . MULTIPLY expression
+    (6) expression -> expression . DIVIDE expression
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+
+    RIGHTPAR        shift and go to state 50
+    MULTIPLY        shift and go to state 16
+    DIVIDE          shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 34
+
+
+state 50
+
+    (13) expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .
+
+    MULTIPLY        reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    DIVIDE          reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    PLUS            reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    MINUS           reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    CALCULATE       reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    FACTORIAL       reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    SQRT            reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    SEN             reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    COS             reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    AREA            reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    RADTODEG        reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    INT             reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    FLOAT           reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    LEFTPAR         reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    $end            reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    RIGHTPAR        reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    RIGHTBRA        reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
+    COMA            reduce using rule 13 (expression -> AREA LEFTPAR expression COMA expression RIGHTPAR .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: reduce/reduce conflict in state 2 resolved using rule (expressions -> expression)
 WARNING: rejected rule (empty -> <empty>) in state 2
-WARNING: reduce/reduce conflict in state 28 resolved using rule (expression -> expression MINUS expression)
-WARNING: rejected rule (expression -> MINUS expression) in state 28
+WARNING: reduce/reduce conflict in state 32 resolved using rule (expression -> expression MINUS expression)
+WARNING: rejected rule (expression -> MINUS expression) in state 32

@@ -24,6 +24,9 @@ tokens = (
     'SQRT',
     'SEN',
     'COS',
+    'AREA',
+    'COMA',
+    'RADTODEG',
     'FIN'
 )
 
@@ -66,6 +69,9 @@ t_FACTORIAL = r'\!'
 t_SQRT = r'sqrt'
 t_SEN = r'sen'
 t_COS = r'cos'
+t_AREA = r'area'
+t_COMA = r','
+t_RADTODEG = r'radtodeg'
 
 
 #usaremos esto para ignorar espacios entre los valores de la expresión
@@ -92,7 +98,7 @@ lexer = lex.lex()
 #Mientras más abajo está, mayor jerarquía tiene
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left','FACTORIAL','MULTIPLY', 'DIVIDE'),
+    ('left','FACTORIAL','MULTIPLY', 'DIVIDE', 'AREA', 'RADTODEG'),
     ('left', 'SQRT', 'SEN', 'COS'),
     ('left', 'RIGHTPAR', 'LEFTPAR'),
     ('right', 'UMINUS')
@@ -112,7 +118,7 @@ def p_solutio(t):
     'expression : CALCULATE LEFTBRA expression RIGHTBRA FIN'
     print('Resultado: ' + str(t[3]))
 
-#Se definen las operaciones 
+#Se definen las operaciones, dependiendo de la entrada y la operación establecida según nuestros token, devuelve el resultado.
 def p_expression_solution(t):
     '''
     expression  : expression MULTIPLY expression
@@ -123,6 +129,8 @@ def p_expression_solution(t):
                 | SQRT LEFTPAR expression RIGHTPAR
                 | SEN LEFTPAR expression RIGHTPAR
                 | COS LEFTPAR expression RIGHTPAR
+                | AREA LEFTPAR expression COMA expression RIGHTPAR
+                | RADTODEG LEFTPAR expression RIGHTPAR
     '''
     if t[2] == '+': t[0] = t[1] + t[3]
     elif t[2] == '-': t[0] = t[1] - t[3]
@@ -132,8 +140,22 @@ def p_expression_solution(t):
     elif t[1] == 'sqrt': t[0] = raiz(t[3])
     elif t[1] == 'sen': t[0] = senos(t[3])
     elif t[1] == 'cos': t[0] = cosenos(t[3])
+    elif ((t[1] == 'area') and (t[4] == ',')): t[0] = area(t[3],t[5])
+    elif t[1] == 'radtodeg': t[0] = radtodeg(t[3])
+    
+
+#Función para trasnformar radianes a grados sexagesimales
+def radtodeg(a):
+    deg=a*(180/math.pi)
+    return round(deg,3)
     
     
+#Función para el calculo del área de un cuadrado
+def area(a,b):
+    base=a
+    altura=b
+    return base*altura
+
 #Función para transformar a angulos
 def senos(a):
     angulo = math.radians(a)
@@ -153,7 +175,6 @@ def factorial(n):
         n -= 1
     return factorial_total
 
-
 #Función para calcular la raiz cuadrada de un numero que recibe como parámetro t[3]
 def raiz(numero):
     numero = numero*1.0
@@ -167,7 +188,6 @@ def raiz(numero):
         p = error
     return p
 
-    
 #Las expresiones puede ser de tipo integer o float
 def p_expressions_int_floa(t):
     '''

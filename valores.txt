@@ -1,9 +1,11 @@
 Calcular[3+3];
 Calcular[2-2];
+Calcular[5*4];
+Calcular[60/10];
+Calcular[3*5+2*(8+1)/4+3/2];
 Calcular[!10];
 Calcular[sqrt(144)];
-Calcular[sen(90)];
-Calcular[cos(90)];
-Calcular[3*2*(sen(45))+31/45+!5];
-Calcular[3+2*5/7];
-Calcular[3*2+5+(5*3+1)];
+Calcular[sen(270)];
+Calcular[cos(180)];
+Calcular[area(72,38.5)];
+Calcular[radtodeg(1)];
