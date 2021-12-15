@@ -1,0 +1,67 @@
+Calculadora.py
+Reglas para operaciones:
+
+1. Siempre debe incluir la palabra "Calcular" antes de cualquier operación,
+de otra manera, el lenguaje le dirá que tiene un error en sintaxis.
+
+2. Después de "Calcular", toda operación debe estar encerrada entre dos corchetes "[ ]"
+y ser finalizada con un ";".
+
+	Ejemplo:
+	Calcular[3+5*5];
+
+3. Reglas de sintaxis de operaciones. Recuerde asegurarse de escribi los paréntesis en las
+operaciones que se le indica.
+
+	Suma: expresión + expresión
+	Resta: expresión - expresión
+	Multiplicación: expresión * expresión
+	División: expresión / expresión
+	Factorial: !expresión
+	Raiz Cuadrada: sqrt(expresión)
+	Seno: sen(expresión)
+	Coseno: cos(expresión"
+	Área del rectángulo: area(expresión,expresión)
+		->La primera corresponde a la base, la segunda corresponde a la altura.
+	Tranformar radián a grados: radtodeg(expresión)
+
+->Las expresiones pueden ser números enteros, flotantes, tanto positivos cómo negativos,
+ e incluso puede agregar expresiones dentro de otras expresiones.
+
+->Puede agergar un paréntesis a las operaciones para establecer una jerarquía, al momento de
+calcularlas, el sistema se regirá por PEMDAS. 
+		
+	Ejemplo:
+	Calcular[3+2*(3+1)];
+
+	Resultado: 11
+	->Recuerde que si quiere establecer una multiplicación con los datos de un paréntesis,
+	siempre debe establecer el token "*".
+
+IMPORTANTE: Las operaciones debe guardarlas en el archivo valores.txt, lo podrá encontrar
+en la misma carpeta del proyecto. Obligatoriamente debe escribir las operaciones a realizar alli,
+guardar el archivo y el programa se encargará de leerlas automáticamente al abrirlo.
+
+->Recuerde que puede agregar más de una operación, sólo necesitará separarlas por saltos de linea,
+siguiendo las reglas anteriores, Ejemplo:
+	
+	Calcular[3+5*5];
+	Calcular[sqrt(121)];
+	Calcular[area(3,5)];
+	Calcular[40/2];
+
+	Al guardarlas y abrir el archivo Calculadora.py, obtendrá en orden los resultados.
+
+	Resultado: 28
+	Resultado: 11.0
+	Resultado: 15
+	Resultado: 20
+
+
+-> Si tiene algun error de sintaxis de operación, obtendrá el mensaje: "Fallo en la entrada,
+sintaxis de operación mal escrita."
+
+-> Si agrega una letra que no se encuentre dentro del lenguaje, obtendrá el mensaje:
+"Syntax Error: El valor no se encuentra dentro del lenguaje"
+"Valor no permitido: valor"  
+	

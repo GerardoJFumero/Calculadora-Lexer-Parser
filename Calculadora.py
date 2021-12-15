@@ -223,4 +223,3 @@ t = open("./valores.txt", "r")
 input = t.read()
 print(input)
 parser.parse(input)
-
