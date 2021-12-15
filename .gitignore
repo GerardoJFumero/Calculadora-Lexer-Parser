@@ -1,0 +1,5 @@
+#Ignora los archivos que se generan en pycache
+__pycache__  
+
+#Ignora los archivos generados en parser.out, se ignoran ya que el tamaño del archivo va aumentando
+parser.out

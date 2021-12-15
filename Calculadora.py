@@ -79,8 +79,8 @@ t_ignore = " \t"
 
 #funcion para señalar errores en la entrada por caracteres que no correspondan al lenguaje
 def t_error(t):
-    print("¡Syntax error!, el valor introducido no es permitido")
-    print("Valor prohibido: '%s'" % t.value[0])
+    print("¡Syntax error!, el valor no se encuentra dentro del lenguaje")
+    print("Valor que no se permite: '%s'" % t.value[0])
     t.lexer.skip(1)
     
 def t_newline(t):
@@ -156,7 +156,7 @@ def area(a,b):
     altura=b
     return base*altura
 
-#Función para transformar a angulos
+#Funciónes para calcular senos y cosenos.
 def senos(a):
     angulo = math.radians(a)
     resultado = math.sin(angulo)
@@ -215,7 +215,7 @@ def p_empt(t):
 
 #Si se llega a encontrar un error en las expresiones
 def p_error(t):
-    print("ERROR: Fallo en la entrada, operación no permitida")
+    print("ERROR: Fallo en la entrada, sintaxis de operación mal escrita")
 
 parser = yacc.yacc()
 
